@@ -1,0 +1,17 @@
+{{define "error/forbidden"}}
+{{template "admin_start" .}}
+<div class="page-head">
+  <div>
+    <h1>无权限</h1>
+    <p>当前账号没有访问该功能的权限。</p>
+  </div>
+</div>
+<div class="card">
+  <div class="empty-state">
+    <div class="empty-code">403</div>
+    <p>请联系管理员调整角色权限。</p>
+    <a class="btn primary" href="/dashboard">返回控制台</a>
+  </div>
+</div>
+{{template "admin_end" .}}
+{{end}}

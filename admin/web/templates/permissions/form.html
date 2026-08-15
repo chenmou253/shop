@@ -1,0 +1,108 @@
+{{define "permissions/form"}}
+{{template "admin_start" .}}
+<div class="page-head">
+  <div>
+    <h1>{{.Title}}</h1>
+    <p>选择所属菜单后，会联动加载可选上级权限树。</p>
+  </div>
+  <a class="btn" href="/permissions">返回列表</a>
+</div>
+<form class="card form-card" data-permission-form data-mode="{{.Mode}}" data-id="{{.ID}}">
+  <div class="form-grid">
+    <label class="field">
+      <span>所属菜单</span>
+      <select name="menu_id" data-permission-menu-select data-current-id="{{.ID}}" data-checked-id="0">
+        <option value="0">不绑定菜单</option>
+      </select>
+    </label>
+    <label class="field">
+      <span>权限名称</span>
+      <input name="name" required>
+    </label>
+    <label class="field">
+      <span>权限标识</span>
+      <input name="code" placeholder="user:create" required>
+    </label>
+    <label class="field">
+      <span>请求方法</span>
+      <select name="method">
+        <option value="GET" selected>GET</option>
+        <option value="POST">POST</option>
+        <option value="PUT">PUT</option>
+        <option value="PATCH">PATCH</option>
+        <option value="DELETE">DELETE</option>
+      </select>
+    </label>
+    <label class="field">
+      <span>路径</span>
+      <input name="path" placeholder="/users">
+    </label>
+    <label class="field">
+      <span>排序</span>
+      <input name="sort" type="number" value="10">
+    </label>
+    <label class="switch-row">
+      <input name="status" type="checkbox" value="1" checked>
+      <span>启用权限</span>
+    </label>
+  </div>
+
+  <div class="form-section">
+    <div class="section-title">上级权限</div>
+    <div id="permission-parent-tree" class="tree-box" data-tree-box="permission-parents">
+      <div class="empty-cell">加载中...</div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn primary" type="submit">保存</button>
+    <a class="btn" href="/permissions">取消</a>
+  </div>
+</form>
+{{template "admin_end" .}}
+{{end}}
+
+{{define "permission_parent_checks"}}
+<ul class="check-tree">
+  <li>
+    <div class="tree-line">
+      <span class="tree-spacer"></span>
+      <label>
+        <input class="single-parent-check" type="checkbox" name="parent_id" value="0">
+        <span>作为顶级权限</span>
+      </label>
+    </div>
+  </li>
+  {{range .}}
+  <li>
+    <div class="tree-line">
+      {{if .Children}}<button class="tree-toggle" type="button" data-tree-toggle>▾</button>{{else}}<span class="tree-spacer"></span>{{end}}
+      <label>
+        <input class="single-parent-check" type="checkbox" name="parent_id" value="{{.Permission.ID}}" {{if .Checked}}checked{{end}}>
+        <span>{{.Permission.Name}}</span>
+        <code>{{.Permission.Code}}</code>
+      </label>
+    </div>
+    {{if .Children}}<div class="tree-children">{{template "permission_parent_checks_nested" .Children}}</div>{{end}}
+  </li>
+  {{end}}
+</ul>
+{{end}}
+
+{{define "permission_parent_checks_nested"}}
+<ul class="check-tree">
+  {{range .}}
+  <li>
+    <div class="tree-line">
+      {{if .Children}}<button class="tree-toggle" type="button" data-tree-toggle>▾</button>{{else}}<span class="tree-spacer"></span>{{end}}
+      <label>
+        <input class="single-parent-check" type="checkbox" name="parent_id" value="{{.Permission.ID}}" {{if .Checked}}checked{{end}}>
+        <span>{{.Permission.Name}}</span>
+        <code>{{.Permission.Code}}</code>
+      </label>
+    </div>
+    {{if .Children}}<div class="tree-children">{{template "permission_parent_checks_nested" .Children}}</div>{{end}}
+  </li>
+  {{end}}
+</ul>
+{{end}}

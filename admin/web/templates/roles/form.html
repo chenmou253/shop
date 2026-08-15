@@ -1,0 +1,104 @@
+{{define "roles/form"}}
+{{template "admin_start" .}}
+<div class="page-head">
+  <div>
+    <h1>{{.Title}}</h1>
+    <p>配置角色基础信息、菜单树和权限树。</p>
+  </div>
+  <a class="btn" href="/roles">返回列表</a>
+</div>
+<form class="card form-card" data-role-form data-mode="{{.Mode}}" data-id="{{.ID}}">
+  <div class="form-grid">
+    <label class="field">
+      <span>角色名称</span>
+      <input name="name" required>
+    </label>
+    <label class="field">
+      <span>角色标识</span>
+      <input name="code" required>
+    </label>
+    <label class="field wide">
+      <span>备注</span>
+      <input name="remark">
+    </label>
+    <label class="switch-row">
+      <input name="status" type="checkbox" value="1" checked>
+      <span>启用角色</span>
+    </label>
+  </div>
+
+  <div class="form-section">
+    <div class="section-title">权限联动</div>
+    <div class="inline-controls">
+      <label class="field compact">
+        <span>权限菜单范围</span>
+        <select data-role-access-filter data-role-id="{{.ID}}">
+          <option value="0">全部菜单</option>
+        </select>
+      </label>
+      <button class="btn small" type="button" data-check-all="#role-menu-tree">全选菜单</button>
+      <button class="btn small" type="button" data-uncheck-all="#role-menu-tree">清空菜单</button>
+      <button class="btn small" type="button" data-check-all="#role-permission-tree">全选权限</button>
+      <button class="btn small" type="button" data-uncheck-all="#role-permission-tree">清空权限</button>
+    </div>
+  </div>
+
+  <div class="access-grid">
+    <div class="tree-panel">
+      <div class="panel-title">菜单权限</div>
+      <div id="role-menu-tree" class="tree-box" data-tree-box="menus">
+        <div class="empty-cell">加载中...</div>
+      </div>
+    </div>
+    <div class="tree-panel">
+      <div class="panel-title">接口权限</div>
+      <div id="role-permission-tree" class="tree-box" data-tree-box="permissions">
+        <div class="empty-cell">加载中...</div>
+      </div>
+      <div id="role-hidden-permissions" hidden></div>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn primary" type="submit">保存</button>
+    <a class="btn" href="/roles">取消</a>
+  </div>
+</form>
+{{template "admin_end" .}}
+{{end}}
+
+{{define "role_menu_checks"}}
+<ul class="check-tree">
+  {{range .}}
+  <li>
+    <div class="tree-line">
+      {{if .Children}}<button class="tree-toggle" type="button" data-tree-toggle>▾</button>{{else}}<span class="tree-spacer"></span>{{end}}
+      <label>
+        <input type="checkbox" name="menu_ids" value="{{.Menu.ID}}" {{if .Checked}}checked{{end}}>
+        <span>{{.Menu.Title}}</span>
+        {{if .Menu.Path}}<code>{{.Menu.Path}}</code>{{end}}
+      </label>
+    </div>
+    {{if .Children}}<div class="tree-children">{{template "role_menu_checks" .Children}}</div>{{end}}
+  </li>
+  {{end}}
+</ul>
+{{end}}
+
+{{define "role_permission_checks"}}
+<ul class="check-tree">
+  {{range .}}
+  <li>
+    <div class="tree-line">
+      {{if .Children}}<button class="tree-toggle" type="button" data-tree-toggle>▾</button>{{else}}<span class="tree-spacer"></span>{{end}}
+      <label>
+        <input type="checkbox" name="permission_ids" value="{{.Permission.ID}}" {{if .Checked}}checked{{end}}>
+        <span>{{.Permission.Name}}</span>
+        <code>{{.Permission.Code}}</code>
+      </label>
+    </div>
+    {{if .Children}}<div class="tree-children">{{template "role_permission_checks" .Children}}</div>{{end}}
+  </li>
+  {{end}}
+</ul>
+{{end}}

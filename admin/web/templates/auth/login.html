@@ -1,0 +1,35 @@
+{{define "auth/login"}}
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{.Title}} - RBAC Admin</title>
+  <link rel="stylesheet" href="/static/css/admin.css?v=20260815-2">
+</head>
+<body class="login-body">
+  <main class="login-panel">
+    <div class="login-brand">
+      <span class="brand-mark">RB</span>
+      <div>
+        <h1>RBAC Admin</h1>
+        <p>权限后台管理系统</p>
+      </div>
+    </div>
+    {{if .Error}}<div class="alert danger">{{.Error}}</div>{{end}}
+    <form class="login-form" data-login-form>
+      <label>
+        <span>用户名</span>
+        <input name="username" type="text" autocomplete="username" value="admin" required>
+      </label>
+      <label>
+        <span>密码</span>
+        <input name="password" type="password" autocomplete="current-password" required>
+      </label>
+      <button class="btn primary full" type="submit">登录</button>
+    </form>
+    <script src="/static/js/admin.js?v=20260815-2"></script>
+  </main>
+</body>
+</html>
+{{end}}

@@ -1,0 +1,31 @@
+{{define "cms/index"}}
+{{template "admin_start" .}}
+<div class="page-head">
+  <div>
+    <h1>{{.Title}}</h1>
+    <p>{{.Description}}</p>
+  </div>
+  <button class="btn primary" type="button" data-cms-create>新增记录</button>
+</div>
+<div class="card" data-cms-page data-resource="{{.Resource}}">
+  <div class="card-header cms-toolbar">
+    <h2>数据列表</h2>
+    <form data-cms-search><input name="q" placeholder="搜索当前数据"><button class="btn" type="submit">搜索</button></form>
+  </div>
+  <div class="table-wrap">
+    <table class="table cms-table">
+      <thead data-cms-head><tr><th>加载中...</th></tr></thead>
+      <tbody data-cms-body><tr><td class="empty-cell">加载中...</td></tr></tbody>
+    </table>
+  </div>
+  <div class="cms-pagination" data-cms-pagination></div>
+</div>
+<dialog class="cms-dialog" data-cms-dialog>
+  <form method="dialog" class="cms-dialog-shell" data-cms-form>
+    <div class="cms-dialog-head"><div><h2 data-cms-dialog-title>新增记录</h2><p>保存后前台会直接读取同一个数据库中的最新数据。</p></div><button class="dialog-close" value="cancel" type="button" data-cms-close>×</button></div>
+    <div class="cms-form-grid" data-cms-fields></div>
+    <div class="form-actions"><button class="btn primary" type="submit">保存</button><button class="btn" type="button" data-cms-close>取消</button></div>
+  </form>
+</dialog>
+{{template "admin_end" .}}
+{{end}}

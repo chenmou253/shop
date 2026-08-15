@@ -1,0 +1,30 @@
+{{define "dashboard/index"}}
+{{template "admin_start" .}}
+<div class="page-head">
+  <div>
+    <h1>控制台</h1>
+    <p>后台权限、前台内容和客户线索概览。</p>
+  </div>
+</div>
+<div class="stats-grid" data-dashboard>
+  <div class="stat-card blue"><span>用户</span><strong data-stat="user_count">0</strong></div>
+  <div class="stat-card green"><span>角色</span><strong data-stat="role_count">0</strong></div>
+  <div class="stat-card amber"><span>菜单</span><strong data-stat="menu_count">0</strong></div>
+  <div class="stat-card red"><span>权限</span><strong data-stat="permission_count">0</strong></div>
+  <div class="stat-card blue"><span>启用产品</span><strong data-stat="product_count">0</strong></div>
+  <div class="stat-card green"><span>已发布文章</span><strong data-stat="article_count">0</strong></div>
+  <div class="stat-card red"><span>新询盘</span><strong data-stat="inquiry_count">0</strong></div>
+</div>
+<div class="card">
+  <div class="card-header">
+    <h2>功能入口</h2>
+  </div>
+  <div class="quick-grid">
+    <a href="/cms/products">产品管理</a>
+    <a href="/cms/articles">文章管理</a>
+    <a href="/cms/categories">产品分类</a>
+    <a href="/cms/inquiries">询盘管理</a>
+  </div>
+</div>
+{{template "admin_end" .}}
+{{end}}

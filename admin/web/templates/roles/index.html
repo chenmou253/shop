@@ -1,0 +1,33 @@
+{{define "roles/index"}}
+{{template "admin_start" .}}
+<div class="page-head">
+  <div>
+    <h1>角色管理</h1>
+    <p>维护角色信息，并配置可见菜单和接口权限。</p>
+  </div>
+  <a class="btn primary" href="/roles/new">新增角色</a>
+</div>
+<div class="card">
+  <div class="card-header">
+    <h2>角色列表</h2>
+  </div>
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>角色名称</th>
+          <th>标识</th>
+          <th>备注</th>
+          <th>状态</th>
+          <th class="actions">操作</th>
+        </tr>
+      </thead>
+      <tbody id="roles-table" data-roles-table>
+        <tr><td colspan="6" class="empty-cell">加载中...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{{template "admin_end" .}}
+{{end}}

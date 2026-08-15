@@ -1,0 +1,65 @@
+{{define "admin_start"}}
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{.Title}} - RBAC Admin</title>
+  <link rel="stylesheet" href="/static/css/admin.css?v=20260815-2">
+</head>
+<body class="admin-body" data-active="{{.Active}}">
+  <aside class="sidebar">
+    <a class="brand" href="/dashboard">
+      <span class="brand-mark">RB</span>
+      <span class="brand-text">RBAC Admin</span>
+    </a>
+    <nav id="sidebar-nav" class="nav-tree">
+      <a class="nav-item" href="/dashboard" data-nav-key="dashboard">
+        <span class="nav-icon">▣</span><span>控制台</span>
+      </a>
+    </nav>
+  </aside>
+  <div class="main">
+    <header class="topbar">
+      <button class="icon-btn" type="button" data-sidebar-toggle title="折叠菜单">☰</button>
+      <div class="breadcrumb">后台 / {{.Title}}</div>
+      <div class="topbar-user">
+        <span data-current-user>{{.Username}}</span>
+        <button class="link-btn" type="button" data-logout>退出</button>
+      </div>
+    </header>
+    <section class="content">
+      {{if .Flash}}<div class="alert success">{{.Flash}}</div>{{end}}
+      {{if .Error}}<div class="alert danger">{{.Error}}</div>{{end}}
+{{end}}
+
+{{define "admin_end"}}
+    </section>
+  </div>
+  <script src="/static/js/admin.js?v=20260815-2"></script>
+  <script src="/static/js/cms.js?v=20260815-2"></script>
+</body>
+</html>
+{{end}}
+
+{{define "nav_nodes"}}
+  {{range .}}
+    {{if .Children}}
+      <div class="nav-branch open">
+        <button class="nav-item nav-toggle" type="button" data-tree-toggle>
+          <span class="nav-icon">{{if .Menu.Icon}}{{.Menu.Icon}}{{else}}▦{{end}}</span>
+          <span>{{.Menu.Title}}</span>
+          <span class="nav-caret">▾</span>
+        </button>
+        <div class="nav-children">
+          {{template "nav_nodes" .Children}}
+        </div>
+      </div>
+    {{else}}
+      <a class="nav-item" href="{{if .Menu.Path}}{{.Menu.Path}}{{else}}#{{end}}">
+        <span class="nav-icon">{{if .Menu.Icon}}{{.Menu.Icon}}{{else}}•{{end}}</span>
+        <span>{{.Menu.Title}}</span>
+      </a>
+    {{end}}
+  {{end}}
+{{end}}

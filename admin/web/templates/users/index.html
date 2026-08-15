@@ -1,0 +1,34 @@
+{{define "users/index"}}
+{{template "admin_start" .}}
+<div class="page-head">
+  <div>
+    <h1>用户管理</h1>
+    <p>维护后台登录账号和角色分配。</p>
+  </div>
+  <a class="btn primary" href="/users/new">新增用户</a>
+</div>
+<div class="card">
+  <div class="card-header">
+    <h2>用户列表</h2>
+  </div>
+  <div class="table-wrap">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>用户名</th>
+          <th>昵称</th>
+          <th>邮箱</th>
+          <th>角色</th>
+          <th>状态</th>
+          <th class="actions">操作</th>
+        </tr>
+      </thead>
+      <tbody id="users-table" data-users-table>
+        <tr><td colspan="7" class="empty-cell">加载中...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{{template "admin_end" .}}
+{{end}}

@@ -1,0 +1,45 @@
+{{define "users/form"}}
+{{template "admin_start" .}}
+<div class="page-head">
+  <div>
+    <h1>{{.Title}}</h1>
+    <p>填写账号基础信息，并分配一个或多个角色。</p>
+  </div>
+  <a class="btn" href="/users">返回列表</a>
+</div>
+<form class="card form-card" data-user-form data-mode="{{.Mode}}" data-id="{{.ID}}">
+  <div class="form-grid">
+    <label class="field">
+      <span>用户名</span>
+      <input name="username" required>
+    </label>
+    <label class="field">
+      <span>昵称</span>
+      <input name="nickname">
+    </label>
+    <label class="field">
+      <span>邮箱</span>
+      <input name="email" type="email">
+    </label>
+    <label class="field">
+      <span>{{if eq .Mode "create"}}密码{{else}}重置密码{{end}}</span>
+      <input name="password" type="password" {{if eq .Mode "create"}}required{{end}} placeholder="{{if eq .Mode "edit"}}留空则不修改{{end}}">
+    </label>
+    <label class="switch-row">
+      <input name="status" type="checkbox" value="1" checked>
+      <span>启用账号</span>
+    </label>
+  </div>
+  <div class="form-section">
+    <div class="section-title">角色分配</div>
+    <div class="checkbox-grid" id="user-role-options">
+      <div class="empty-cell">加载中...</div>
+    </div>
+  </div>
+  <div class="form-actions">
+    <button class="btn primary" type="submit">保存</button>
+    <a class="btn" href="/users">取消</a>
+  </div>
+</form>
+{{template "admin_end" .}}
+{{end}}
